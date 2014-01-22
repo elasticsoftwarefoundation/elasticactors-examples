@@ -1,4 +1,6 @@
 *.class
+target/
+pi/target/
 
 # Package Files #
 *.jar
@@ -11,4 +13,3 @@
 
 # Other stuff
 *.bat
-pi\target/
