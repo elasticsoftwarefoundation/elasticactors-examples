@@ -17,7 +17,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.elasticsoftware.elasticactors</groupId>
+    <groupId>org.elasticsoftware.elasticactors-examples</groupId>
     <artifactId>elasticactors-examples</artifactId>
     <version>0.1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -27,8 +27,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <elasticactors.version>0.2.2</elasticactors.version>
-        <elasticactors.systems.version>0.2.2</elasticactors.systems.version>
+        <elasticactors.version>0.3.1</elasticactors.version>
+        <elasticactors.systems.version>0.1.1</elasticactors.systems.version>
         <log4j.version>1.2.17</log4j.version>
         <spring.version>3.2.6.RELEASE</spring.version>
 
@@ -39,7 +39,8 @@
 
     <scm>
         <connection>scm:git:git@github.com:elasticsoftwarefoundation/elasticactors-examples.git</connection>
-        <developerConnection>scm:git:git@github.com:elasticsoftwarefoundation/elasticactors-examples.git
+        <developerConnection>
+            scm:git:git@github.com:elasticsoftwarefoundation/elasticactors-examples.git
         </developerConnection>
         <url>https://github.com/elasticsoftwarefoundation/elasticactors-examples</url>
         <tag>HEAD</tag>
@@ -51,16 +52,67 @@
     <distributionManagement>
         <repository>
             <id>bintray</id>
-            <name>elasticsoftwarefoundation-maven-org.elasticsoftware.elasticactors</name>
-            <url>https://api.bintray.com/maven/elasticsoftwarefoundation/maven/org.elasticsoftware.elasticactors</url>
+            <name>elasticsoftwarefoundation-maven-org.elasticsoftware.elasticactors-examples</name>
+            <url>https://api.bintray.com/maven/elasticsoftwarefoundation/maven/org.elasticsoftware.elasticactors-examples</url>
         </repository>
     </distributionManagement>
+
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>elasticsoftwarefoundation</id>
+            <name>bintray</name>
+            <url>http://dl.bintray.com/elasticsoftwarefoundation/maven/</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>elasticsoftwarefoundation</id>
+            <name>bintray</name>
+            <url>http://dl.bintray.com/elasticsoftwarefoundation/maven/</url>
+        </pluginRepository>
+    </pluginRepositories>
 
     <dependencies>
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>${log4j.version}</version>
+        </dependency>
+
+        <!-- Common Elastic Actors -->
+        <dependency>
+            <groupId>org.elasticsoftware.elasticactors</groupId>
+            <artifactId>elasticactors-test</artifactId>
+            <version>${elasticactors.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsoftware.elasticactors</groupId>
+            <artifactId>elasticactors-api</artifactId>
+            <version>${elasticactors.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsoftware.elasticactors</groupId>
+            <artifactId>elasticactors-base</artifactId>
+            <version>${elasticactors.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsoftware.elasticactors</groupId>
+            <artifactId>elasticactors-core</artifactId>
+            <version>${elasticactors.version}</version>
+        </dependency>
+
+        <!-- Elastic Systems -->
+        <dependency>
+            <groupId>org.elasticsoftware.elasticactors-systems</groupId>
+            <artifactId>elasticactors-systems-http</artifactId>
+            <version>${elasticactors.systems.version}</version>
         </dependency>
 
         <!-- testing -->
