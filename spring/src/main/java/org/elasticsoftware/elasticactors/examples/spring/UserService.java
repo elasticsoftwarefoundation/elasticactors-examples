@@ -40,8 +40,7 @@ public class UserService {
     public UserState updateUser(UserState user) {
         UserState p = users.get(user.getUid());
         if(p != null) {
-            // update user
-            // of course you can also use replace method
+            // update user, of course you can also use replace method
             if(StringUtils.hasText(user.getFirstName())) {
                 p.setFirstName(user.getFirstName());
             }
@@ -51,6 +50,7 @@ public class UserService {
             return p;
         }
         // add new user
-        return users.putIfAbsent(user.getUid(), user);
+        users.putIfAbsent(user.getUid(), user);
+        return user;
     }
 }
