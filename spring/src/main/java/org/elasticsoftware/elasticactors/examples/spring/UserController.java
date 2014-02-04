@@ -43,6 +43,7 @@ public class UserController {
     public UserState updateUser(@PathVariable String uid,
                            @RequestParam(required = false) String firstName,
                            @RequestParam(required = false) String lastName) {
+        log.info(String.format("Updating user[%s] -> %s, %s", uid, firstName, lastName));
         UserState user = new UserState(uid);
         user.setFirstName(firstName);
         user.setLastName(lastName);
