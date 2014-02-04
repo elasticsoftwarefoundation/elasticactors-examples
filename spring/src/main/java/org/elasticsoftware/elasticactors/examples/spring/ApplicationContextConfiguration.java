@@ -17,9 +17,11 @@ package org.elasticsoftware.elasticactors.examples.spring;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.elasticsoftware.elasticactors.ActorSystem;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.MediaType;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.accept.PathExtensionContentNegotiationStrategy;
@@ -58,11 +60,16 @@ public class ApplicationContextConfiguration {
         List<View> views = new ArrayList<>();
         MappingJackson2JsonView view = new MappingJackson2JsonView();
         view.setExtractValueFromSingleKeyModel(true);
-        view.setObjectMapper(new ObjectMapper());
+        view.setObjectMapper(objectMapper());
         views.add(view);
         viewResolver.setDefaultViews(views);
 
         return viewResolver;
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper();
     }
 
     @Bean

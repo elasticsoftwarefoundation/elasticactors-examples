@@ -16,6 +16,7 @@
 package org.elasticsoftware.elasticactors.examples.spring;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -34,10 +35,16 @@ public class UserService {
     }
 
     public boolean addUser(UserState user) {
+        Assert.notNull(user);
+        Assert.notNull(user.getUid());
+        
         return users.putIfAbsent(user.getUid(), user) == null;
     }
 
     public UserState updateUser(UserState user) {
+        Assert.notNull(user);
+        Assert.notNull(user.getUid());
+
         UserState p = users.get(user.getUid());
         if(p != null) {
             // update user, of course you can also use replace method
@@ -49,6 +56,7 @@ public class UserService {
             }
             return p;
         }
+
         // add new user
         users.putIfAbsent(user.getUid(), user);
         return user;
