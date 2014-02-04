@@ -16,6 +16,7 @@
 package org.elasticsoftware.elasticactors.examples.spring;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.elasticsoftware.elasticactors.ActorSystem;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -32,11 +33,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Spring Context (no XML required)
+ *
  * @author Leonard Wolters
  */
 @Configuration
 @ComponentScan("org.elasticsoftware.elasticactors.examples")
-public class ApplicationContext {
+public class ApplicationContextConfiguration {
 
     @Bean
     public ContentNegotiatingViewResolver contentNegotiatingViewResolver() {
@@ -60,5 +63,15 @@ public class ApplicationContext {
         viewResolver.setDefaultViews(views);
 
         return viewResolver;
+    }
+
+    @Bean
+    public ActorSystem actorSystem() {
+//        TestActorSystem testActorSystem = new TestActorSystem();
+//        testActorSystem.initialize();
+//        return testActorSystem.getActorSystem();
+
+
+        return null;
     }
 }
