@@ -15,6 +15,7 @@
  */
 package org.elasticsoftware.elasticactors.examples.spring;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,12 +28,14 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 public class UserController {
+    private static final Logger log = Logger.getLogger(UserController.class);
 
     @Autowired
     private UserService userService;
 
     @RequestMapping(value = "/user/{uid}", method = {RequestMethod.GET, RequestMethod.HEAD, RequestMethod.OPTIONS})
     public UserState getUser(@PathVariable String uid) {
+        log.info(String.format("Retrieving user[%s]", uid));
         return userService.getUser(uid);
     }
 

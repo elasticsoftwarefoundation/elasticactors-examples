@@ -9,7 +9,7 @@
 
     <context:annotation-config/>
 
-    <context:component-scan base-package="org.elasticsoftware.elasticactors"/>
+    <context:component-scan base-package="org.elasticsoftware.elasticactors.examples"/>
 
     <context:property-placeholder location="classpath*:application.properties" ignore-resource-not-found="true"/>
 </beans>

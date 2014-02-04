@@ -10,10 +10,20 @@
             classpath:/META-INF/spring/applicationContext.xml
         </param-value>
     </context-param>
+    <context-param>
+        <param-name>log4jConfigLocation</param-name>
+        <param-value>/WEB-INF/classes/log4j.properties</param-value>
+    </context-param>
+    <context-param>
+        <param-name>log4jRefreshInterval</param-name>
+        <param-value>1000</param-value>
+    </context-param>
 
-    <!-- Listener that starts-up Spring (uses applicationContext.xml) -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
     </listener>
 
     <!-- Spring MVC Dispatcher servlet (uses spring-mvc.servlet.xml) -->
@@ -31,16 +41,6 @@
         <servlet-name>elasticactors</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
-
-    <filter>
-        <filter-name>jsonpCallbackFilter</filter-name>
-        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-    </filter>
-
-    <filter-mapping>
-        <filter-name>jsonpCallbackFilter</filter-name>
-        <url-pattern>*.json</url-pattern>
-    </filter-mapping>
 
     <!-- files to search for when a request URL resolves to a directory -->
     <welcome-file-list>
