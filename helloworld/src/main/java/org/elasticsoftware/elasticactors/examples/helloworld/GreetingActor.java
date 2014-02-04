@@ -15,6 +15,7 @@
  */
 package org.elasticsoftware.elasticactors.examples.helloworld;
 
+import org.apache.log4j.Logger;
 import org.elasticsoftware.elasticactors.Actor;
 import org.elasticsoftware.elasticactors.ActorRef;
 import org.elasticsoftware.elasticactors.TypedActor;
@@ -26,9 +27,10 @@ import org.elasticsoftware.elasticactors.base.state.StringState;
  */
 @Actor(stateClass = StringState.class, serializationFramework = JacksonSerializationFramework.class)
 public class GreetingActor extends TypedActor<Greeting> {
+    private static final Logger log = Logger.getLogger(GreetingActor.class);
 
     @Override
     public void onReceive(ActorRef sender, Greeting message) throws Exception {
-        System.out.println("Hello " + message.getName());
+        log.info(String.format("Hello %s", message.getName()));
     }
 }
