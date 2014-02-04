@@ -1,6 +1,5 @@
 *.class
-target/
-pi/target/
+target/*
 
 # Package Files #
 *.jar
