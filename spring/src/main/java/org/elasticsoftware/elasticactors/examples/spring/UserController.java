@@ -15,6 +15,7 @@
  */
 package org.elasticsoftware.elasticactors.examples.spring;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,15 +28,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class UserController {
 
+    @Autowired
+    private UserService userService;
+
     @RequestMapping(value = "/user/{uid}", method = {RequestMethod.GET, RequestMethod.HEAD, RequestMethod.OPTIONS})
-    public User getUser(@PathVariable String uid) {
-        return new User();
+    public UserState getUser(@PathVariable String uid) {
+        return userService.getUser(uid);
     }
 
     @RequestMapping(value = "/user/{uid}", method = {RequestMethod.POST})
-    public User updateUser(@PathVariable String uid,
+    public UserState updateUser(@PathVariable String uid,
                            @RequestParam(required = false) String firstName,
                            @RequestParam(required = false) String lastName) {
-        return new User();
+        UserState user = new UserState(uid);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        return userService.updateUser(user);
     }
 }

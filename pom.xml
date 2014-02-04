@@ -152,7 +152,7 @@
                     <include>*.xml</include>
                     <include>*.yaml</include>
                     <include>*.properties</include>
-                    <include>META-INF/*</include>
+                    <include>META-INF/**</include>
                 </includes>
             </resource>
         </resources>
@@ -178,10 +178,6 @@
                     <source>1.7</source>
                     <target>1.7</target>
                     <encoding>UTF-8</encoding>
-                    <!--
-                        <meminitial>128m</meminitial> <maxmem>512m</maxmem>
-                        <verbose>false</verbose>
-                    -->
                 </configuration>
             </plugin>
             <plugin>

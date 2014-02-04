@@ -12,16 +12,4 @@
     <context:component-scan base-package="org.elasticsoftware.elasticactors"/>
 
     <context:property-placeholder location="classpath*:application.properties" ignore-resource-not-found="true"/>
-
-    <!-- Loads a log4j config file -->
-    <bean id="log4jRestInitialization" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-        <property name="targetClass" value="org.springframework.util.Log4jConfigurer" />
-        <property name="targetMethod" value="initLogging" />
-        <property name="arguments">
-            <list>
-                <value>${log4j.location}</value>
-                <value>${log4j.refreshTimeout}</value>
-            </list>
-        </property>
-    </bean>
 </beans>
