@@ -37,41 +37,32 @@ import static org.testng.Assert.assertEquals;
 
 /**
  * @author Joost van de Wijgerd
+ * @author Leonard Wolters
  */
 public class PiApproximatorTest {
     private static final Logger log = Logger.getLogger(PiApproximatorTest.class);
-    private TestActorSystem testActorSystem;
 
-    @BeforeMethod(enabled = true)
-    public void setUp() {
-        BasicConfigurator.resetConfiguration();
-        BasicConfigurator.configure();
-        Logger.getLogger("org.elasticsoftware").setLevel(Level.DEBUG);
+    @Test
+    public void testPiCalculation() throws Exception {
 
-        testActorSystem = new TestActorSystem();
+        // Create a test actor system
+        TestActorSystem testActorSystem = new TestActorSystem();
         testActorSystem.initialize();
-    }
 
-    @AfterMethod(enabled = true)
-    public void tearDown() {
-        if(testActorSystem != null) {
-            testActorSystem.destroy();
-            testActorSystem = null;
-        }
-        BasicConfigurator.resetConfiguration();
-    }
+        // Get actor system
+        ActorSystem actorSystem = testActorSystem.getActorSystem();
+        ActorRef listener = actorSystem.actorOf("pi/calculate", Listener.class, new Listener.State());
+        actorSystem.actorOf("master", Master.class, new Master.State(listener, 16, 10000, 10));
 
-    @Test(enabled = true)
-    public void testInContainer() throws Exception {
-        // make sure http system is loaded
-        ActorSystem testSystem = testActorSystem.getActorSystem("examples");
-        ActorRef listener = testSystem.actorOf("pi/calculate",Listener.class,new Listener.State());
-        testSystem.actorOf("master",Master.class,new Master.State(listener,16,10000,10));
-
+        // Run http example
         AsyncHttpClient httpClient = new AsyncHttpClient();
         ListenableFuture<Response> responseFuture = httpClient.prepareGet("http://localhost:9080/pi/calculate").execute();
         Response response = responseFuture.get();
         assertEquals(response.getContentType(),"application/json");
         log.info(response.getResponseBody("UTF-8"));
+
+        // wait a bit before shutting down
+        Thread.sleep(300);
+        testActorSystem.destroy();
     }
 }
