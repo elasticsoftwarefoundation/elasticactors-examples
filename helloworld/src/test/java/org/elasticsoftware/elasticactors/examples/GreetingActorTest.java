@@ -15,11 +15,14 @@
  */
 package org.elasticsoftware.elasticactors.examples;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.elasticsoftware.elasticactors.ActorRef;
 import org.elasticsoftware.elasticactors.ActorSystem;
 import org.elasticsoftware.elasticactors.examples.helloworld.Greeting;
 import org.elasticsoftware.elasticactors.examples.helloworld.GreetingActor;
 import org.elasticsoftware.elasticactors.test.TestActorSystem;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 /**
@@ -38,6 +41,8 @@ public class GreetingActorTest {
         greeter.tell(new Greeting("Joost van de Wijgerd"), null);
         greeter.tell(new Greeting("Leonard Wolters"), null);
 
+        // wait a bit before shutting down
+        Thread.sleep(300);
         testActorSystem.destroy();
     }
 }
