@@ -37,13 +37,13 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value = "/user/{uid}", method = {RequestMethod.GET, RequestMethod.HEAD, RequestMethod.OPTIONS})
-    public UserMessage getUser(@PathVariable String uid) {
+    public User getUser(@PathVariable String uid) {
         log.info(String.format("Retrieving user[%s]", uid));
         return userService.getUser(uid);
     }
 
     @RequestMapping(value = "/user/{uid}", method = {RequestMethod.POST})
-    public UserMessage addUser(@PathVariable String uid,
+    public User addUser(@PathVariable String uid,
                            @RequestParam(required = false) String firstName,
                            @RequestParam(required = false) String lastName) {
         log.info(String.format("Add new user[%s] -> %s, %s", uid, firstName, lastName));
@@ -51,7 +51,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/{uid}", method = {RequestMethod.PUT})
-    public UserMessage updateUser(@PathVariable String uid,
+    public User updateUser(@PathVariable String uid,
                              @RequestParam(required = false) String firstName,
                              @RequestParam(required = false) String lastName) {
         log.info(String.format("Updating user[%s] -> %s, %s", uid, firstName, lastName));

@@ -38,6 +38,22 @@ public class UserService {
     private ActorSystem actorSystem;
 
     /**
+     * Retrieves a user
+     *
+     * @param uid
+     * @return
+     */
+    public User getUser(String uid) {
+        Assert.notNull(uid);
+        try {
+            ActorRef actorRef = actorSystem.actorOf(uid, UserActor.class);
+        } catch (Exception e) {
+            log.warn(e.getMessage(), e);
+        }
+        return null;
+    }
+
+    /**
      * Adds a new user
      *
      * @param uid
@@ -45,7 +61,7 @@ public class UserService {
      * @param lastName
      * @return
      */
-    public void addUser(String uid, String firstName, String lastName) {
+    public User addUser(String uid, String firstName, String lastName) {
         Assert.notNull(uid);
         try {
             ActorRef actorRef = actorSystem.actorOf(uid, UserActor.class);
@@ -53,6 +69,7 @@ public class UserService {
         } catch (Exception e) {
             log.warn(e.getMessage(), e);
         }
+        return null;
     }
 
     /**
@@ -63,7 +80,7 @@ public class UserService {
      * @param lastName
      * @return
      */
-    public void updateUser(String uid, String firstName, String lastName) {
+    public User updateUser(String uid, String firstName, String lastName) {
         Assert.notNull(uid);
         try {
             ActorRef actorRef = actorSystem.actorFor(uid);
@@ -71,5 +88,6 @@ public class UserService {
         } catch (Exception e) {
             log.warn(e.getMessage(), e);
         }
+        return null;
     }
 }
