@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.elasticsoftware.elasticactors.examples.helloworld;
+package org.elasticsoftware.elasticactors.examples.springweb;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -21,23 +21,29 @@ import org.elasticsoftware.elasticactors.base.serialization.JacksonSerialization
 import org.elasticsoftware.elasticactors.serialization.Message;
 
 /**
+ * Simple domain object reflecting a user
+ *
  * @author Leonard Wolters
  */
 @Message(serializationFramework = JacksonSerializationFramework.class)
-public final class Greeting {
-    private final String name;
-
-    public Greeting() {
-        this("Duke");
-    }
+public final class UserMessage {
+    private String firstName;
+    private String lastName;
 
     @JsonCreator
-    public Greeting(@JsonProperty("name") String name) {
-        this.name = name;
+    public UserMessage(@JsonProperty("firstName") String firstName,
+                       @JsonProperty("lastName") String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
-    @JsonProperty("name")
-    public String getName() {
-        return name;
+    @JsonProperty("firstName")
+    public String getFirstName() {
+        return firstName;
+    }
+
+    @JsonProperty("lastName")
+    public String getLastName() {
+        return lastName;
     }
 }

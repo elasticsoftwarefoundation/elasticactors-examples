@@ -21,9 +21,9 @@
         <version>0.1.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>spring</artifactId>
-    <packaging>jar</packaging>
-    <name>Elastic Software Foundation :: ElasticActors :: Examples :: Spring</name>
+    <artifactId>spring-web</artifactId>
+    <packaging>war</packaging>
+    <name>Elastic Software Foundation :: ElasticActors :: Examples :: Spring MVC</name>
     <url>https://github.com/elasticsoftwarefoundation/elasticactors-examples</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

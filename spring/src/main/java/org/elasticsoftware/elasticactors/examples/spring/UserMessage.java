@@ -17,52 +17,41 @@ package org.elasticsoftware.elasticactors.examples.spring;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.util.Assert;
+import org.elasticsoftware.elasticactors.base.serialization.JacksonSerializationFramework;
+import org.elasticsoftware.elasticactors.serialization.Message;
 
 /**
  * Simple domain object reflecting a user
  *
  * @author Leonard Wolters
  */
-public class UserState {
-    @JsonProperty("uid")
+@Message(serializationFramework = JacksonSerializationFramework.class)
+public final class UserMessage {
     private String uid;
-
-    @JsonProperty("firstName")
     private String firstName;
-
-    @JsonProperty("lastName")
     private String lastName;
 
-    @JsonProperty("created")
-    private long created = System.currentTimeMillis();
-
-    public UserState(String uid) {
-        Assert.notNull(uid);
+    @JsonCreator
+    public UserMessage(@JsonProperty("uid") String uid,
+                       @JsonProperty("firstName") String firstName,
+                       @JsonProperty("lastName") String lastName) {
         this.uid = uid;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
+    @JsonProperty("uid")
     public String getUid() {
         return uid;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
-
+    @JsonProperty("firstName")
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
+    @JsonProperty("lastName")
     public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 }

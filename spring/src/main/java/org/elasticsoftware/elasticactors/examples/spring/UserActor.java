@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.elasticsoftware.elasticactors.examples.helloworld;
+package org.elasticsoftware.elasticactors.examples.spring;
 
 import org.apache.log4j.Logger;
 import org.elasticsoftware.elasticactors.Actor;
@@ -26,11 +26,38 @@ import org.elasticsoftware.elasticactors.base.state.StringState;
  * @author Leonard Wolters
  */
 @Actor
-public class GreetingActor extends TypedActor<Greeting> {
-    private static final Logger log = Logger.getLogger(GreetingActor.class);
+public class UserActor extends TypedActor<UserMessage> {
+    private static final Logger log = Logger.getLogger(UserActor.class);
+
+    private String uid;
 
     @Override
-    public void onReceive(ActorRef sender, Greeting message) throws Exception {
-        log.info(String.format("Hello %s", message.getName()));
+    public void postCreate(ActorRef creator) throws Exception {
+        //log.info("[%s] postCreate");
+    }
+
+    @Override
+    public void postActivate(String previousVersion) throws Exception {
+        // do nothing by default
+    }
+
+    @Override
+    public void onUndeliverable(ActorRef receiver, Object message) throws Exception {
+        log.info("[%s] postCreate");
+    }
+
+    @Override
+    public void prePassivate() throws Exception {
+        // do nothing by default
+    }
+
+    @Override
+    public void preDestroy(ActorRef destroyer) throws Exception {
+        // do nothing by default
+    }
+
+    @Override
+    public void onReceive(ActorRef sender, UserMessage message) throws Exception {
+        //
     }
 }

@@ -15,24 +15,15 @@
  */
 package org.elasticsoftware.elasticactors.examples.spring;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.elasticsoftware.elasticactors.ActorSystem;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.elasticsoftware.elasticactors.test.TestActorSystem;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
-import org.springframework.http.MediaType;
-import org.springframework.web.accept.ContentNegotiationManager;
-import org.springframework.web.accept.PathExtensionContentNegotiationStrategy;
-import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
-import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
+import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 /**
  * Spring Context (no XML required)
@@ -40,45 +31,14 @@ import java.util.Map;
  * @author Leonard Wolters
  */
 @Configuration
-@ComponentScan("org.elasticsoftware.elasticactors.examples")
+@EnableSpringConfigured
+@ComponentScan("org.elasticsoftware.elasticactors.examples.spring")
 public class ApplicationContextConfiguration {
 
     @Bean
-    public ContentNegotiatingViewResolver contentNegotiatingViewResolver() {
-        ContentNegotiatingViewResolver viewResolver = new ContentNegotiatingViewResolver();
-        viewResolver.setOrder(1);
-        viewResolver.setUseNotAcceptableStatusCode(true);
-
-        // set content negotiation manager
-        Map<String,MediaType> mediaTypes = new HashMap<>();
-        mediaTypes.put("json", MediaType.APPLICATION_JSON);
-        PathExtensionContentNegotiationStrategy strategy = new PathExtensionContentNegotiationStrategy(mediaTypes);
-        ContentNegotiationManager manager = new ContentNegotiationManager(strategy);
-        viewResolver.setContentNegotiationManager(manager);
-
-        // set views
-        List<View> views = new ArrayList<>();
-        MappingJackson2JsonView view = new MappingJackson2JsonView();
-        view.setExtractValueFromSingleKeyModel(true);
-        view.setObjectMapper(objectMapper());
-        views.add(view);
-        viewResolver.setDefaultViews(views);
-
-        return viewResolver;
-    }
-
-    @Bean
-    public ObjectMapper objectMapper() {
-        return new ObjectMapper();
-    }
-
-    @Bean
     public ActorSystem actorSystem() {
-//        TestActorSystem testActorSystem = new TestActorSystem();
-//        testActorSystem.initialize();
-//        return testActorSystem.getActorSystem();
-
-
-        return null;
+        TestActorSystem testActorSystem = new TestActorSystem();
+        testActorSystem.initialize();
+        return testActorSystem.getActorSystem();
     }
 }
