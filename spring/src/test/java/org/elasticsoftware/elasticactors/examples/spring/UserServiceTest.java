@@ -16,6 +16,10 @@
 package org.elasticsoftware.elasticactors.examples.spring;
 
 import org.elasticsoftware.elasticactors.spring.AnnotationConfigApplicationContext;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.testng.annotations.Test;
 
 /**
@@ -27,8 +31,9 @@ public class UserServiceTest {
     public void testUserService() {
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
         ctx.register(ApplicationContextConfiguration.class);
-        ctx.scan("org.elasticsoftware.elasticactors.examples");
         ctx.refresh();
+
+//        ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("/META-INF/spring/test-config.xml");
 
         UserService userService = ctx.getBean(UserService.class);
         userService.addUser("lwolters", "Leonard", "Wolters");

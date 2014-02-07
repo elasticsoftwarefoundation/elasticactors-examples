@@ -17,9 +17,13 @@ package org.elasticsoftware.elasticactors.examples.spring;
 
 import org.elasticsoftware.elasticactors.ActorSystem;
 import org.elasticsoftware.elasticactors.test.TestActorSystem;
+import org.elasticsoftware.elasticactors.test.configuration.BackplaneConfiguration;
+import org.elasticsoftware.elasticactors.test.configuration.MessagingConfiguration;
+import org.elasticsoftware.elasticactors.test.configuration.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
 
 import javax.annotation.PostConstruct;
@@ -33,6 +37,7 @@ import javax.annotation.PreDestroy;
 @Configuration
 @EnableSpringConfigured
 @ComponentScan("org.elasticsoftware.elasticactors.examples.spring")
+//@Import({BackplaneConfiguration.class, MessagingConfiguration.class, TestConfiguration.class})
 public class ApplicationContextConfiguration {
 
     @Bean
