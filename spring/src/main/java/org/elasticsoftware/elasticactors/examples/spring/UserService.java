@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
+import javax.inject.Named;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -27,6 +28,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Leonard Wolters
  */
 @Service
+@Named("userService")
 public class UserService {
     private ConcurrentHashMap<String, UserState> users = new ConcurrentHashMap<>();
 
@@ -37,7 +39,7 @@ public class UserService {
     public boolean addUser(UserState user) {
         Assert.notNull(user);
         Assert.notNull(user.getUid());
-        
+
         return users.putIfAbsent(user.getUid(), user) == null;
     }
 
