@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.elasticsoftware.elasticactors.examples.spring;
+package org.elasticsoftware.elasticactors.examples.spring.config;
 
 import org.elasticsoftware.elasticactors.ActorSystem;
 import org.elasticsoftware.elasticactors.Asynchronous;
 import org.elasticsoftware.elasticactors.ServiceActor;
+import org.elasticsoftware.elasticactors.examples.spring.service.UserService;
 import org.elasticsoftware.elasticactors.spring.ActorAnnotationBeanNameGenerator;
 import org.elasticsoftware.elasticactors.test.TestActorSystem;
 import org.elasticsoftware.elasticactors.test.configuration.BackplaneConfiguration;
@@ -28,6 +29,7 @@ import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -42,7 +44,8 @@ import javax.annotation.PreDestroy;
 @EnableAsync(annotation = Asynchronous.class, mode = AdviceMode.ASPECTJ)
 //@PropertySource(value = "file:/etc/elasticactors/system.properties")
 @ComponentScan(nameGenerator = ActorAnnotationBeanNameGenerator.class,
-        includeFilters = {@ComponentScan.Filter(value = {ServiceActor.class}, type = FilterType.ANNOTATION)},
+        includeFilters = {@ComponentScan.Filter(value = {ServiceActor.class}, type = FilterType.ANNOTATION),
+                          @ComponentScan.Filter(value = {Service.class}, type = FilterType.ANNOTATION)},
         excludeFilters = {@ComponentScan.Filter(value = {Controller.class}, type = FilterType.ANNOTATION)})
 public class ApplicationContextConfiguration {
 
@@ -55,5 +58,10 @@ public class ApplicationContextConfiguration {
         executor.setThreadNamePrefix("ASYNCHRONOUS-ANNOTATION-EXECUTOR-");
         executor.initialize();
         return executor;
+    }
+
+    @Bean
+    public UserService userService() {
+        return new UserService();
     }
 }

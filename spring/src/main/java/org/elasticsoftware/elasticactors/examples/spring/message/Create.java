@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.elasticsoftware.elasticactors.examples.spring;
+package org.elasticsoftware.elasticactors.examples.spring.message;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -26,31 +26,28 @@ import org.elasticsoftware.elasticactors.serialization.Message;
  * @author Leonard Wolters
  */
 @Message(serializationFramework = JacksonSerializationFramework.class)
-public final class UserMessage {
+public final class Create {
     private String uid;
     private String firstName;
     private String lastName;
 
     @JsonCreator
-    public UserMessage(@JsonProperty("uid") String uid,
-                       @JsonProperty("firstName") String firstName,
-                       @JsonProperty("lastName") String lastName) {
+    public Create(@JsonProperty("uid") String uid,
+                  @JsonProperty("firstName") String firstName,
+                  @JsonProperty("lastName") String lastName) {
         this.uid = uid;
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    @JsonProperty("uid")
     public String getUid() {
         return uid;
     }
 
-    @JsonProperty("firstName")
     public String getFirstName() {
         return firstName;
     }
 
-    @JsonProperty("lastName")
     public String getLastName() {
         return lastName;
     }

@@ -13,13 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.elasticsoftware.elasticactors.examples.spring;
+package org.elasticsoftware.elasticactors.examples.spring.service;
 
+import org.elasticsoftware.elasticactors.examples.spring.config.ApplicationContextConfiguration;
+import org.elasticsoftware.elasticactors.examples.spring.service.UserService;
 import org.elasticsoftware.elasticactors.spring.AnnotationConfigApplicationContext;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.testng.annotations.Test;
 
 /**
@@ -28,14 +26,12 @@ import org.testng.annotations.Test;
 public class UserServiceTest {
 
     @Test
-    public void testUserService() {
+    public void testCreateUser() {
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
         ctx.register(ApplicationContextConfiguration.class);
         ctx.refresh();
 
-//        ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("/META-INF/spring/test-config.xml");
-
         UserService userService = ctx.getBean(UserService.class);
-        userService.addUser("lwolters", "Leonard", "Wolters");
+        userService.createUser("lwolters", "Leonard", "Wolters");
     }
 }

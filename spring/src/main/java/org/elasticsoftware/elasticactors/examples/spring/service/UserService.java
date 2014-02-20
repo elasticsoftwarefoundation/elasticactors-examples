@@ -13,18 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.elasticsoftware.elasticactors.examples.spring;
+package org.elasticsoftware.elasticactors.examples.spring.service;
 
 import org.apache.log4j.Logger;
 import org.elasticsoftware.elasticactors.ActorRef;
 import org.elasticsoftware.elasticactors.ActorSystem;
+import org.elasticsoftware.elasticactors.examples.spring.actor.User;
+import org.elasticsoftware.elasticactors.examples.spring.message.Create;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Pretty straightforward service implementation to manage users
@@ -47,29 +47,11 @@ public class UserService {
      * @param lastName
      * @return
      */
-    public void addUser(String uid, String firstName, String lastName) {
+    public void createUser(String uid, String firstName, String lastName) {
         Assert.notNull(uid);
         try {
-            ActorRef actorRef = actorSystem.actorOf(uid, UserActor.class);
-            actorRef.tell(new UserMessage(uid, firstName, lastName), null);
-        } catch (Exception e) {
-            log.warn(e.getMessage(), e);
-        }
-    }
-
-    /**
-     * Updates an existing user
-     *
-     * @param uid
-     * @param firstName
-     * @param lastName
-     * @return
-     */
-    public void updateUser(String uid, String firstName, String lastName) {
-        Assert.notNull(uid);
-        try {
-            ActorRef actorRef = actorSystem.actorFor(uid);
-            actorRef.tell(new UserMessage(uid, firstName, lastName), null);
+            ActorRef actorRef = actorSystem.actorOf(uid, User.class);
+            actorRef.tell(new Create(uid, firstName, lastName), null);
         } catch (Exception e) {
             log.warn(e.getMessage(), e);
         }

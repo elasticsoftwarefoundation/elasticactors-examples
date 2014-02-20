@@ -13,21 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.elasticsoftware.elasticactors.examples.spring;
+package org.elasticsoftware.elasticactors.examples.spring.actor;
 
 import org.apache.log4j.Logger;
 import org.elasticsoftware.elasticactors.Actor;
 import org.elasticsoftware.elasticactors.ActorRef;
 import org.elasticsoftware.elasticactors.TypedActor;
-import org.elasticsoftware.elasticactors.base.serialization.JacksonSerializationFramework;
-import org.elasticsoftware.elasticactors.base.state.StringState;
+import org.elasticsoftware.elasticactors.examples.spring.message.Create;
 
 /**
  * @author Leonard Wolters
  */
 @Actor
-public class UserActor extends TypedActor<UserMessage> {
-    private static final Logger log = Logger.getLogger(UserActor.class);
+public class User extends TypedActor<Create> {
+    private static final Logger log = Logger.getLogger(User.class);
 
     private String uid;
 
@@ -57,7 +56,7 @@ public class UserActor extends TypedActor<UserMessage> {
     }
 
     @Override
-    public void onReceive(ActorRef sender, UserMessage message) throws Exception {
+    public void onReceive(ActorRef sender, Create message) throws Exception {
         //
     }
 }
