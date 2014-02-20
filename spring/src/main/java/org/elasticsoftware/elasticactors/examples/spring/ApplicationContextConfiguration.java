@@ -16,15 +16,18 @@
 package org.elasticsoftware.elasticactors.examples.spring;
 
 import org.elasticsoftware.elasticactors.ActorSystem;
+import org.elasticsoftware.elasticactors.Asynchronous;
+import org.elasticsoftware.elasticactors.ServiceActor;
+import org.elasticsoftware.elasticactors.spring.ActorAnnotationBeanNameGenerator;
 import org.elasticsoftware.elasticactors.test.TestActorSystem;
 import org.elasticsoftware.elasticactors.test.configuration.BackplaneConfiguration;
 import org.elasticsoftware.elasticactors.test.configuration.MessagingConfiguration;
 import org.elasticsoftware.elasticactors.test.configuration.TestConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.*;
 import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.stereotype.Controller;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -36,14 +39,21 @@ import javax.annotation.PreDestroy;
  */
 @Configuration
 @EnableSpringConfigured
-@ComponentScan("org.elasticsoftware.elasticactors.examples.spring")
-//@Import({BackplaneConfiguration.class, MessagingConfiguration.class, TestConfiguration.class})
+@EnableAsync(annotation = Asynchronous.class, mode = AdviceMode.ASPECTJ)
+@PropertySource(value = "file:/etc/bux-trading/system.properties")
+@ComponentScan(nameGenerator = ActorAnnotationBeanNameGenerator.class,
+        includeFilters = {@ComponentScan.Filter(value = {ServiceActor.class}, type = FilterType.ANNOTATION)},
+        excludeFilters = {@ComponentScan.Filter(value = {Controller.class}, type = FilterType.ANNOTATION)})
 public class ApplicationContextConfiguration {
 
-    @Bean
-    public ActorSystem actorSystem() {
-        TestActorSystem testActorSystem = new TestActorSystem();
-        testActorSystem.initialize();
-        return testActorSystem.getActorSystem();
+    @Bean(name = "asyncExecutor")
+    public java.util.concurrent.Executor getAsyncExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(Runtime.getRuntime().availableProcessors());
+        executor.setMaxPoolSize(Runtime.getRuntime().availableProcessors() * 3);
+        executor.setQueueCapacity(1024);
+        executor.setThreadNamePrefix("ASYNCHRONOUS-ANNOTATION-EXECUTOR-");
+        executor.initialize();
+        return executor;
     }
 }
