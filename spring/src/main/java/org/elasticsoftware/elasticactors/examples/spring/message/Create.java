@@ -40,14 +40,17 @@ public final class Create {
         this.lastName = lastName;
     }
 
+    @JsonProperty("uid")
     public String getUid() {
         return uid;
     }
 
+    @JsonProperty("firstName")
     public String getFirstName() {
         return firstName;
     }
 
+    @JsonProperty("lastName")
     public String getLastName() {
         return lastName;
     }

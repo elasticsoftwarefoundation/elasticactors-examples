@@ -18,6 +18,7 @@ package org.elasticsoftware.elasticactors.examples.spring.service;
 import org.elasticsoftware.elasticactors.examples.spring.config.ApplicationContextConfiguration;
 import org.elasticsoftware.elasticactors.examples.spring.service.UserService;
 import org.elasticsoftware.elasticactors.spring.AnnotationConfigApplicationContext;
+import org.elasticsoftware.elasticactors.test.TestActorSystem;
 import org.testng.annotations.Test;
 
 /**
@@ -26,12 +27,14 @@ import org.testng.annotations.Test;
 public class UserServiceTest {
 
     @Test
-    public void testCreateUser() {
+    public void testCreateUser() throws Exception {
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
         ctx.register(ApplicationContextConfiguration.class);
         ctx.refresh();
 
         UserService userService = ctx.getBean(UserService.class);
         userService.createUser("lwolters", "Leonard", "Wolters");
+
+        Thread.sleep(200);
     }
 }

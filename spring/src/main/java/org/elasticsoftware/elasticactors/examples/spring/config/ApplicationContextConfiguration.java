@@ -15,24 +15,11 @@
  */
 package org.elasticsoftware.elasticactors.examples.spring.config;
 
-import org.elasticsoftware.elasticactors.ActorSystem;
-import org.elasticsoftware.elasticactors.Asynchronous;
-import org.elasticsoftware.elasticactors.ServiceActor;
-import org.elasticsoftware.elasticactors.examples.spring.service.UserService;
-import org.elasticsoftware.elasticactors.spring.ActorAnnotationBeanNameGenerator;
-import org.elasticsoftware.elasticactors.test.TestActorSystem;
-import org.elasticsoftware.elasticactors.test.configuration.BackplaneConfiguration;
-import org.elasticsoftware.elasticactors.test.configuration.MessagingConfiguration;
 import org.elasticsoftware.elasticactors.test.configuration.TestConfiguration;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
-import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
-
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 
 /**
  * Spring Context (no XML required)
@@ -41,27 +28,9 @@ import javax.annotation.PreDestroy;
  */
 @Configuration
 @EnableSpringConfigured
-@EnableAsync(annotation = Asynchronous.class, mode = AdviceMode.ASPECTJ)
-//@PropertySource(value = "file:/etc/elasticactors/system.properties")
-@ComponentScan(nameGenerator = ActorAnnotationBeanNameGenerator.class,
-        includeFilters = {@ComponentScan.Filter(value = {ServiceActor.class}, type = FilterType.ANNOTATION),
-                          @ComponentScan.Filter(value = {Service.class}, type = FilterType.ANNOTATION)},
-        excludeFilters = {@ComponentScan.Filter(value = {Controller.class}, type = FilterType.ANNOTATION)})
+@Import({TestConfiguration.class})
+@ComponentScan({"org.elasticsoftware.elasticactors.base", "org.elasticsoftware.elasticactors.examples.spring"})
 public class ApplicationContextConfiguration {
 
-    @Bean(name = "asyncExecutor")
-    public java.util.concurrent.Executor getAsyncExecutor() {
-        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(Runtime.getRuntime().availableProcessors());
-        executor.setMaxPoolSize(Runtime.getRuntime().availableProcessors() * 3);
-        executor.setQueueCapacity(1024);
-        executor.setThreadNamePrefix("ASYNCHRONOUS-ANNOTATION-EXECUTOR-");
-        executor.initialize();
-        return executor;
-    }
-
-    @Bean
-    public UserService userService() {
-        return new UserService();
-    }
+    // you can define your own beans, or simply use a component scan
 }

@@ -21,6 +21,8 @@ import org.elasticsoftware.elasticactors.ActorRef;
 import org.elasticsoftware.elasticactors.TypedActor;
 import org.elasticsoftware.elasticactors.examples.spring.message.Create;
 
+import static java.lang.String.format;
+
 /**
  * @author Leonard Wolters
  */
@@ -28,35 +30,8 @@ import org.elasticsoftware.elasticactors.examples.spring.message.Create;
 public class User extends TypedActor<Create> {
     private static final Logger log = Logger.getLogger(User.class);
 
-    private String uid;
-
-    @Override
-    public void postCreate(ActorRef creator) throws Exception {
-        //log.info("[%s] postCreate");
-    }
-
-    @Override
-    public void postActivate(String previousVersion) throws Exception {
-        // do nothing by default
-    }
-
-    @Override
-    public void onUndeliverable(ActorRef receiver, Object message) throws Exception {
-        log.info("[%s] postCreate");
-    }
-
-    @Override
-    public void prePassivate() throws Exception {
-        // do nothing by default
-    }
-
-    @Override
-    public void preDestroy(ActorRef destroyer) throws Exception {
-        // do nothing by default
-    }
-
     @Override
     public void onReceive(ActorRef sender, Create message) throws Exception {
-        //
+        log.info(format("onReceive: [%s]", message.getUid()));
     }
 }
