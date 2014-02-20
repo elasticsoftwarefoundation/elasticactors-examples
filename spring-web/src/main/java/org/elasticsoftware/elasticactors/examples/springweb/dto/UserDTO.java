@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.elasticsoftware.elasticactors.examples.springweb;
+package org.elasticsoftware.elasticactors.examples.springweb.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *
  * @author Leonard Wolters
  */
-public class User {
+public class UserDTO {
     @JsonProperty("uid")
     private String uid;
 

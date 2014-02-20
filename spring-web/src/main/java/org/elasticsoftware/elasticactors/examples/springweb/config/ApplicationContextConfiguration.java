@@ -13,24 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.elasticsoftware.elasticactors.examples.springweb;
+package org.elasticsoftware.elasticactors.examples.springweb.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.elasticsoftware.elasticactors.ActorSystem;
-import org.elasticsoftware.elasticactors.test.TestActorSystem;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
+import org.elasticsoftware.elasticactors.Asynchronous;
+import org.elasticsoftware.elasticactors.test.configuration.TestConfiguration;
+import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
 import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.accept.PathExtensionContentNegotiationStrategy;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,7 +40,10 @@ import java.util.Map;
  * @author Leonard Wolters
  */
 @Configuration
-@ComponentScan("org.elasticsoftware.elasticactors.examples")
+@EnableSpringConfigured
+@EnableAsync(annotation = Asynchronous.class, mode = AdviceMode.ASPECTJ)
+@Import({TestConfiguration.class})
+@ComponentScan({"org.elasticsoftware.elasticactors.base", "org.elasticsoftware.elasticactors.examples.springweb"})
 public class ApplicationContextConfiguration {
 
     @Bean
@@ -69,15 +70,14 @@ public class ApplicationContextConfiguration {
         return viewResolver;
     }
 
-    @Bean
-    public ObjectMapper objectMapper() {
-        return new ObjectMapper();
-    }
-
-    @Bean
-    public ActorSystem actorSystem() {
-        TestActorSystem testActorSystem = new TestActorSystem();
-        testActorSystem.initialize();
-        return testActorSystem.getActorSystem();
+    @Bean(name = "asyncExecutor")
+    public java.util.concurrent.Executor getAsyncExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(Runtime.getRuntime().availableProcessors());
+        executor.setMaxPoolSize(Runtime.getRuntime().availableProcessors() * 3);
+        executor.setQueueCapacity(1024);
+        executor.setThreadNamePrefix("ASYNCHRONOUS-ANNOTATION-EXECUTOR-");
+        executor.initialize();
+        return executor;
     }
 }
