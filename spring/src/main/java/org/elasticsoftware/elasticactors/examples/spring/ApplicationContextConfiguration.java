@@ -40,7 +40,7 @@ import javax.annotation.PreDestroy;
 @Configuration
 @EnableSpringConfigured
 @EnableAsync(annotation = Asynchronous.class, mode = AdviceMode.ASPECTJ)
-@PropertySource(value = "file:/etc/bux-trading/system.properties")
+//@PropertySource(value = "file:/etc/elasticactors/system.properties")
 @ComponentScan(nameGenerator = ActorAnnotationBeanNameGenerator.class,
         includeFilters = {@ComponentScan.Filter(value = {ServiceActor.class}, type = FilterType.ANNOTATION)},
         excludeFilters = {@ComponentScan.Filter(value = {Controller.class}, type = FilterType.ANNOTATION)})
