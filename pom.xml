@@ -19,7 +19,7 @@
 
     <groupId>org.elasticsoftware.elasticactors-examples</groupId>
     <artifactId>elasticactors-examples</artifactId>
-    <version>0.1.1-SNAPSHOT</version>
+    <version>0.1.1</version>
     <packaging>pom</packaging>
     <name>Elastic Software Foundation :: ElasticActors :: Examples </name>
     <url>https://github.com/elasticsoftwarefoundation/elasticactors-examples</url>
@@ -43,7 +43,7 @@
             scm:git:git@github.com:elasticsoftwarefoundation/elasticactors-examples.git
         </developerConnection>
         <url>https://github.com/elasticsoftwarefoundation/elasticactors-examples</url>
-        <tag>HEAD</tag>
+        <tag>v0.1.1</tag>
     </scm>
 
     <modules>
